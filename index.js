@@ -8,12 +8,14 @@ let browser;
 app.get('/', async (req, res) => {
   try {
     if (!browser) {
-      browser = await puppeteer.launch();
+      browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      });
     }
 
     const page = await browser.newPage();
     await page.goto('https://www.tiktok.com/@birobirobirodev', {
-      waitUntil: 'networkidle2',
+      waitUntil: 'load',
       setTimeout: ms('0s'),
     });
     await page.waitForSelector('[data-e2e="followers-count"]');
