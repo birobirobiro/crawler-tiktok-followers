@@ -12,7 +12,10 @@ app.get('/', async (req, res) => {
     }
 
     const page = await browser.newPage();
-    await page.goto('https://www.tiktok.com/@birobirobirodev');
+    await page.goto('https://www.tiktok.com/@birobirobirodev', {
+      waitUntil: 'networkidle2',
+      setTimeout: ms('0s'),
+    });
     await page.waitForSelector('[data-e2e="followers-count"]');
     const followersCount = await page.$eval('[data-e2e="followers-count"]', (el) => el.innerText);
 
@@ -28,4 +31,6 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.listen(3000);
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
