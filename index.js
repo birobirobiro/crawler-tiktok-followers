@@ -14,6 +14,8 @@ app.get('/', async (req, res) => {
     }
 
     const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
+
     await page.goto('https://www.tiktok.com/@birobirobirodev', {
       waitUntil: 'load',
       setTimeout: ms('0s'),
